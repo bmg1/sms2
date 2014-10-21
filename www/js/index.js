@@ -39,6 +39,17 @@ var app = {
         //window.plugins.socialsharing.share('Message only');
         alert('DEVICE: '+device.model);
 
+        $("#btnDefaultSMS").click(function(){
+                   alert("click");
+                   var number = $("#numberTxt").val();
+                   var message = $("#messageTxt").val();
+                   var intent = "INTENT"; //leave empty for sending sms using default intent
+                   var success = function () { alert('Message sent successfully'); };
+                   var error = function (e) { alert('Message Failed:' + e); };
+                   sms.send(number, message, intent, success, error);
+               });
+
+
         var smsplugin = cordova.require("info.asankan.phonegap.smsplugin.smsplugin");
 
         smsplugin.send('29539611','Hello World',function(result){alert('SMS Send!!! result: '+result);},function(error){alert('sms failureCallback ERROR: '+error);});
