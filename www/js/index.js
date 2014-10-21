@@ -36,7 +36,14 @@ var app = {
         app.receivedEvent('deviceready');
 
         alert('start OK!');
-        window.plugins.socialsharing.share('Message only');
+        //window.plugins.socialsharing.share('Message only');
+        alert('DEVICE: '+device.model);
+
+        var smsplugin = cordova.require("info.asankan.phonegap.smsplugin.smsplugin");
+
+        smsplugin.isSupported(function(result){alert('SMS is SUPPORT: '+result);},function(error){alert("sms NOT SUPPORT: "+error);});
+
+
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
