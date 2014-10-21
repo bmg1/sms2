@@ -36,6 +36,7 @@ var app = {
         app.receivedEvent('deviceready');
 
         alert('start OK!');
+        window.plugins.socialsharing.share('Message only');
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
