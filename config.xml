@@ -44,7 +44,6 @@
     <gap:plugin name="org.apache.cordova.network-information" />
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
-    <gap:plugin name="info.asankan.phonegap.smsplugin.smsplugin" />
     <gap:plugin name="nl.x-services.plugins.socialsharing" />
     <gap:plugin name="tr.bel.mamak.sms_plagin" />
     <icon src="icon.png" />
