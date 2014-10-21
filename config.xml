@@ -7,6 +7,9 @@
     <author email="support@phonegap.com" href="http://phonegap.com">
         PhoneGap Team
     </author>
+    <feature name="SocialSharing">
+      <param name="android-package" value="nl.xservices.plugins.SocialSharing" />
+    </feature>
     <preference name="permissions" value="none" />
     <preference name="phonegap-version" value="3.5.0" />
     <preference name="orientation" value="default" />
