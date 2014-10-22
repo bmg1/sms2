@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+
+
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -39,27 +42,20 @@ var app = {
         //window.plugins.socialsharing.share('Message only');
         alert('DEVICE: '+device.model);
 
-        $("#btnDefaultSMS").click(function(){
-                   alert("click");
-                   var number = $("#numberTxt").val();
-                   var message = $("#messageTxt").val();
-                   var intent = "INTENT"; //leave empty for sending sms using default intent
-                   var success = function () { alert('Message sent successfully'); };
-                   var error = function (e) { alert('Message Failed:' + e); };
-                   sms.send(number, message, intent, success, error);
-               });
+
 
         var src = 'http://larocca.lv:8000/studio69';
         var myMedia = new Media(src, function(){alert('Media ok');}, function(error){alert('Media ERROR: '+error);});
         myMedia.play();
 
 
-        var smsplugin = cordova.require("info.asankan.phonegap.smsplugin.smsplugin");
+       // var smsplugin = cordova.require("info.asankan.phonegap.smsplugin.smsplugin");
 
+       /*
         smsplugin.send('29539611','Hello World',function(result){alert('SMS Send!!! result: '+result);},function(error){alert('sms failureCallback ERROR: '+error);});
         alert('alert - sms send');
         smsplugin.isSupported(function(result){alert('SMS is SUPPORT: '+result);},function(error){alert("sms NOT SUPPORT: "+error);});
-
+    */
 
     },
     // Update DOM on a Received Event
@@ -74,3 +70,19 @@ var app = {
         console.log('Received Event: ' + id);
     }
 };
+
+
+
+$(document).ready(function(){
+    alert('ready');
+
+    $("#btnDefaultSMS").click(function(){
+               alert("click");
+               var number = $("#numberTxt").val();
+               var message = $("#messageTxt").val();
+               var intent = "INTENT"; //leave empty for sending sms using default intent
+               var success = function () { alert('Message sent successfully'); };
+               var error = function (e) { alert('Message Failed:' + e); };
+               sms.send(number, message, intent, success, error);
+           });
+});
