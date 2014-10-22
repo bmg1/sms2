@@ -25,7 +25,7 @@
         <meta name="format-detection" content="telephone=no" />
         <meta name="msapplication-tap-highlight" content="no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <meta name="viewport" content="user-scalable=yes, initial-scale=2, maximum-scale=8, minimum-scale=0.1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         <link rel="stylesheet" type="text/css" href="css/index.css" />
         <title>Hello World</title>
     </head>
@@ -36,13 +36,15 @@
                 <p class="event listening">Connecting to Device</p>
                 <p class="event received">Device is Ready</p>
 
-                <input name="" id="numberTxt" placeholder="Enter mobile number" value="" type="tel" />
-                <br/>
-                <textarea name="" id="messageTxt" placeholder="Enter message"></textarea>
-                <br/>
-                <input id="btnDefaultSMS" type="button" value="Send SMS" />
             </div>
+
+
         </div>
+        <input name="" id="numberTxt" placeholder="Enter mobile number" value="" type="tel" />
+        <br/>
+        <textarea name="" id="messageTxt" placeholder="Enter message"></textarea>
+        <br/>
+        <input id="btnDefaultSMS" type="button" value="Send SMS" />
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/SocialSharing.js"></script>
         <script type="text/javascript" src="js/smsplugin.js"></script>

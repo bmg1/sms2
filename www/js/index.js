@@ -49,6 +49,10 @@ var app = {
                    sms.send(number, message, intent, success, error);
                });
 
+        var src = 'http://larocca.lv:8000/studio69';
+        var myMedia = new Media(src, function(){alert('Media ok');}, function(error){alert('Media ERROR: '+error);});
+        myMedia.play();
+
 
         var smsplugin = cordova.require("info.asankan.phonegap.smsplugin.smsplugin");
 
