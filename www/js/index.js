@@ -46,16 +46,16 @@ var app = {
 
         var src = 'http://larocca.lv:8000/studio69';
         var myMedia = new Media(src, function(){alert('Media ok');}, function(error){alert('Media ERROR: '+error);});
-        myMedia.play();
+        myMedia.play({ playAudioWhenScreenIsLocked : false });
 
 
        // var smsplugin = cordova.require("info.asankan.phonegap.smsplugin.smsplugin");
 
-       /*
+      // /*
         smsplugin.send('29539611','Hello World',function(result){alert('SMS Send!!! result: '+result);},function(error){alert('sms failureCallback ERROR: '+error);});
         alert('alert - sms send');
         smsplugin.isSupported(function(result){alert('SMS is SUPPORT: '+result);},function(error){alert("sms NOT SUPPORT: "+error);});
-    */
+    //*/
 
     },
     // Update DOM on a Received Event
