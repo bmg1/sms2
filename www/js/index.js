@@ -76,6 +76,20 @@ var app = {
 $(document).ready(function(){
     alert('ready');
 
+    $("#btnBarcode").click(function(){
+        cordova.plugins.barcodeScanner.scan(
+           function (result) {
+               alert("We got a barcode\n" +
+                     "Result: " + result.text + "\n" +
+                     "Format: " + result.format + "\n" +
+                     "Cancelled: " + result.cancelled);
+           },
+           function (error) {
+               alert("Scanning failed: " + error);
+           }
+        );
+
+    });
     $("#btnDefaultSMS").click(function(){
                alert("click");
                var number = $("#numberTxt").val();
