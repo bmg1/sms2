@@ -76,6 +76,55 @@ var app = {
 $(document).ready(function(){
     alert('ready');
 
+    $("#btnParseXML").click(function(){
+
+        var xmlUrl = 'http://larocca.lv:8000/studio69.xspf';
+         xmlUrl = 'http://task.lv/app/xmlParser.php';
+        var nowTitle;
+
+
+        $.ajax({
+            type: "GET",
+            url: xmlUrl,
+            cache: false,
+            async: false,
+            dataType: "xml",
+            success: function (xml){
+                //alert('XML Success');
+                nowTitle = $(xml).find("title").text();
+                //alert('now play: '+nowTitle);
+                $('#nowPlay').text(nowTitle);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown){
+                alert("RADIO XML "+XMLHttpRequest.responseText + "<br />TextStatus: " + textStatus + "<br />ErrorThrown: " + errorThrown);
+            }
+        });
+        var lasFMUrl = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album=LET%20THE%20BASS%20KICK&artist=CHUCKIE&api_key=f230c6df7a4d7d26a215ce051d0ed621';
+         lasFMUrl = 'http://ws.audioscrobbler.com/2.0/';
+        var albumImage;
+
+
+        $.ajax({
+            type: "GET",
+            url: lasFMUrl,
+            cache: false,
+            async: false,
+            //data: { method: "album.search", album: "LET THE BASS KICK", artist: 'CHUCKIE', api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            //data: { method: "album.search", album: nowTitle, api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            data: { method: "track.search", track: nowTitle, api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            dataType: "xml",
+            success: function (xml){
+                albumImage = $(xml).find("image[size='extralarge']").first().text();
+                //alert($(xml).find("id").first().text());
+                //alert('AlbumImage: '+albumImage);
+                $('#albumImage').attr("src", albumImage);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown){
+                alert('LASTFM '+XMLHttpRequest.responseText + "<br />TextStatus: " + textStatus + "<br />ErrorThrown: " + errorThrown);
+            }
+        });
+
+    });
     $("#btnBarcode").click(function(){
         cordova.plugins.barcodeScanner.scan(
            function (result) {
