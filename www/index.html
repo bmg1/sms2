@@ -48,6 +48,25 @@
         <input id="btnBarcode" type="button" value="BArcode" />
         <input id="btnParseXML" type="button" value="Parse XML" />
         <h4>Play: <span id="nowPlay"></span><img src="" id="albumImage"></h4>
+
+        <hr>
+        <div>
+            <p style='margin-left:5%;' id="audio_title">&lt;3</p>
+            <p style='margin-left:5%;' id="audio_position">&lt;3</p>
+
+            <div class="ui-grid-a">
+                <div class="ui-block-a">
+                    <a data-role="button" data-theme="a" id="play" onclick="app.playAudio()" href="#">
+                        <span class="ui-btn-text">STREAM</span> </a>
+                </div>
+                <div class="ui-block-b">
+                    <a data-role="button" data-theme="a" id="stop" onclick="app.stopAudio()" href="#">
+                        <span class="ui-btn-text">S T O P</span> </a>
+                </div>
+            </div>
+            <textarea id="logs"></textarea>
+        </div>
+
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/SocialSharing.js"></script>
         <script type="text/javascript" src="js/smsplugin.js"></script>

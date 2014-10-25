@@ -38,6 +38,8 @@ var app = {
     onDeviceReady: function() {
         app.receivedEvent('deviceready');
 
+
+
         alert('start OK!');
         //window.plugins.socialsharing.share('Message only');
         alert('DEVICE: '+device.model);
@@ -45,8 +47,12 @@ var app = {
 
 
         var src = 'http://larocca.lv:8000/studio69';
-        var myMedia = new Media(src, function(){alert('Media ok');}, function(error){alert('Media ERROR: '+error);});
-        myMedia.play({ playAudioWhenScreenIsLocked : false });
+
+        app.updateMedia(src);
+
+
+       //var myMedia = new Media(src, function(){alert('Media ok');}, function(error){alert('Media ERROR: '+error);});
+        //myMedia.play({ playAudioWhenScreenIsLocked : false });
 
 
        // var smsplugin = cordova.require("info.asankan.phonegap.smsplugin.smsplugin");
@@ -58,6 +64,73 @@ var app = {
     //*/
 
     },
+    updateMedia: function (radioUrl){
+        if(myMedia != null){
+            myMedia.release();
+        }
+        document.getElementById('audio_title').innerHTML = radioUrl;
+        myMedia = new Media(radioUrl,
+            function (){ // success callback
+                $('#logs').append("\n\n"+"Media instance success.");
+            },
+            function (){ // error callback
+                $('#logs').append("\n\n"+"Media error");
+            },
+            function (status){
+                ///$('#logs').append("\n\n"+"status: "+status);
+                mediaState = status;
+                if(status == Media.MEDIA_NONE){
+                    $('#logs').append("\n\n"+"MEDIA_NONE");
+                } else if(status == Media.MEDIA_STARTING){
+                    $('#logs').append("\n\n"+"MEDIA_STARTING");
+                    document.getElementById('audio_position').innerHTML = 'buffering';
+                    $('#play .ui-btn-text').text("P A U S E");
+                } else if(status == Media.MEDIA_RUNNING){
+                    $('#logs').append("\n\n"+"MEDIA_RUNNING");
+                    $('#play .ui-btn-text').text("P A U S E");
+                } else if(status == Media.MEDIA_PAUSED){
+                    $('#logs').append("\n\n"+"MEDIA_PAUSED");
+                    $('#play .ui-btn-text').text("STREAM");
+                } else if(status == Media.MEDIA_STOPPED){
+                    $('#logs').append("\n\n"+"MEDIA_STOPPED");
+                    document.getElementById('audio_position').innerHTML = '<3';
+                    $('#play .ui-btn-text').text("STREAM");
+                } else{
+                    $('#logs').append("\n\n"+"MEDIA_UNKNOWN");
+                }
+            });
+    },
+    playAudio: function (){
+        if(mediaState != Media.MEDIA_STARTING && mediaState != Media.MEDIA_RUNNING){
+            myMedia.play();
+            // Update myMedia position every second
+            if(mediaTimer == null){
+                mediaTimer = setInterval(function (){
+                    // get myMedia position
+                    myMedia.getCurrentPosition(
+                        // success callback
+                        function (position){
+                            if(mediaState == 2 && position > -1){
+                                document.getElementById('audio_position').innerHTML = position + '/' + myMedia.getDuration() + ' secs.';
+                            }
+                        },
+                        // error callback
+                        function (e){
+                            $('#logs').append("\n\n"+"Error getting pos=" + e);
+                            document.getElementById('audio_position').innerHTML = "Error: " + e;
+                        }
+                    );
+                }, 1000);
+            }
+        } else{
+            myMedia.pause();
+        }
+    },
+    stopAudio: function (){
+        myMedia.stop();
+        clearInterval(mediaTimer);
+        mediaTimer = null;
+    },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -67,7 +140,7 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-        console.log('Received Event: ' + id);
+        $('#logs').append("\n\n"+'Received Event: ' + id);
     }
 };
 
@@ -137,7 +210,6 @@ $(document).ready(function(){
                alert("Scanning failed: " + error);
            }
         );
-
     });
     $("#btnDefaultSMS").click(function(){
                alert("click");
