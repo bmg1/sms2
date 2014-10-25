@@ -17,7 +17,7 @@
  * under the License.
  */
 
-
+var myMedia;
 
 var app = {
     // Application Constructor
@@ -48,10 +48,8 @@ var app = {
 
         var src = 'http://larocca.lv:8000/studio69';
 
-        app.updateMedia(src);
 
-
-       //var myMedia = new Media(src, function(){alert('Media ok');}, function(error){alert('Media ERROR: '+error);});
+        myMedia = new Media(src, function(){alert('Media ok');}, function(error){alert('Media ERROR: '+error);});
         //myMedia.play({ playAudioWhenScreenIsLocked : false });
 
 
@@ -63,76 +61,6 @@ var app = {
         smsplugin.isSupported(function(result){alert('SMS is SUPPORT: '+result);},function(error){alert("sms NOT SUPPORT: "+error);});
     //*/
 
-    },
-    updateMedia: function (radioUrl){
-        alert("updateMedia, radioUrl:" + radioUrl);
-        if(myMedia != null){
-            myMedia.release();
-        }
-        document.getElementById('audio_title').innerHTML = radioUrl;
-        alert("audio_title");
-        myMedia = new Media(radioUrl,
-            function (){ // success callback
-                alert("Media instance success.");
-            },
-            function (){ // error callback
-                alert("Media error");
-            },
-            function (status){
-                alert("status: "+status);
-                mediaState = status;
-                if(status == Media.MEDIA_NONE){
-                    alert("MEDIA_NONE");
-                } else if(status == Media.MEDIA_STARTING){
-                    alert("MEDIA_STARTING");
-                    document.getElementById('audio_position').innerHTML = 'buffering';
-                    $('#play .ui-btn-text').text("P A U S E");
-                } else if(status == Media.MEDIA_RUNNING){
-                    alert("MEDIA_RUNNING");
-                    $('#play .ui-btn-text').text("P A U S E");
-                } else if(status == Media.MEDIA_PAUSED){
-                    alert("MEDIA_PAUSED");
-                    $('#play .ui-btn-text').text("STREAM");
-                } else if(status == Media.MEDIA_STOPPED){
-                    alert("MEDIA_STOPPED");
-                    document.getElementById('audio_position').innerHTML = '<3';
-                    $('#play .ui-btn-text').text("STREAM");
-                } else{
-                    alert("MEDIA_UNKNOWN");
-                }
-            });
-    },
-    playAudio: function (){
-        alert("playAudio START, mediaState:" + mediaState);
-        if(mediaState != Media.MEDIA_STARTING && mediaState != Media.MEDIA_RUNNING){
-            myMedia.play();
-            // Update myMedia position every second
-            if(mediaTimer == null){
-                mediaTimer = setInterval(function (){
-                    // get myMedia position
-                    myMedia.getCurrentPosition(
-                        // success callback
-                        function (position){
-                            if(mediaState == 2 && position > -1){
-                                document.getElementById('audio_position').innerHTML = position + '/' + myMedia.getDuration() + ' secs.';
-                            }
-                        },
-                        // error callback
-                        function (e){
-                            alert("Error getting pos=" + e);
-                            document.getElementById('audio_position').innerHTML = "Error: " + e;
-                        }
-                    );
-                }, 1000);
-            }
-        } else{
-            myMedia.pause();
-        }
-    },
-    stopAudio: function (){
-        myMedia.stop();
-        clearInterval(mediaTimer);
-        mediaTimer = null;
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {
@@ -190,7 +118,7 @@ $(document).ready(function(){
     $('#stop').click(function(){
            alert("START app.stopAudio()!");
            //onclick="app.stopAudio()"
-           app.stopAudio();
+           //app.stopAudio();
        });
 
 
