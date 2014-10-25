@@ -71,32 +71,32 @@ var app = {
         document.getElementById('audio_title').innerHTML = radioUrl;
         myMedia = new Media(radioUrl,
             function (){ // success callback
-                $('#logs').append("\n\n"+"Media instance success.");
+                $('#logs').append("\n"+"Media instance success.");
             },
             function (){ // error callback
-                $('#logs').append("\n\n"+"Media error");
+                $('#logs').append("\n"+"Media error");
             },
             function (status){
-                ///$('#logs').append("\n\n"+"status: "+status);
+                ///$('#logs').append("\n"+"status: "+status);
                 mediaState = status;
                 if(status == Media.MEDIA_NONE){
-                    $('#logs').append("\n\n"+"MEDIA_NONE");
+                    $('#logs').append("\n"+"MEDIA_NONE");
                 } else if(status == Media.MEDIA_STARTING){
-                    $('#logs').append("\n\n"+"MEDIA_STARTING");
+                    $('#logs').append("\n"+"MEDIA_STARTING");
                     document.getElementById('audio_position').innerHTML = 'buffering';
                     $('#play .ui-btn-text').text("P A U S E");
                 } else if(status == Media.MEDIA_RUNNING){
-                    $('#logs').append("\n\n"+"MEDIA_RUNNING");
+                    $('#logs').append("\n"+"MEDIA_RUNNING");
                     $('#play .ui-btn-text').text("P A U S E");
                 } else if(status == Media.MEDIA_PAUSED){
-                    $('#logs').append("\n\n"+"MEDIA_PAUSED");
+                    $('#logs').append("\n"+"MEDIA_PAUSED");
                     $('#play .ui-btn-text').text("STREAM");
                 } else if(status == Media.MEDIA_STOPPED){
-                    $('#logs').append("\n\n"+"MEDIA_STOPPED");
+                    $('#logs').append("\n"+"MEDIA_STOPPED");
                     document.getElementById('audio_position').innerHTML = '<3';
                     $('#play .ui-btn-text').text("STREAM");
                 } else{
-                    $('#logs').append("\n\n"+"MEDIA_UNKNOWN");
+                    $('#logs').append("\n"+"MEDIA_UNKNOWN");
                 }
             });
     },
@@ -116,7 +116,7 @@ var app = {
                         },
                         // error callback
                         function (e){
-                            $('#logs').append("\n\n"+"Error getting pos=" + e);
+                            $('#logs').append("\n"+"Error getting pos=" + e);
                             document.getElementById('audio_position').innerHTML = "Error: " + e;
                         }
                     );
@@ -140,7 +140,7 @@ var app = {
         listeningElement.setAttribute('style', 'display:none;');
         receivedElement.setAttribute('style', 'display:block;');
 
-        $('#logs').append("\n\n"+'Received Event: ' + id);
+        $('#logs').append("\n"+'Received Event: ' + id);
     }
 };
 
@@ -148,6 +148,8 @@ var app = {
 
 $(document).ready(function(){
     alert('ready');
+    $('#logs').append("\n"+"START LOG");
+
 
     $("#btnParseXML").click(function(){
 
