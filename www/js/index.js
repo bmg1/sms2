@@ -70,6 +70,7 @@ var app = {
             myMedia.release();
         }
         document.getElementById('audio_title').innerHTML = radioUrl;
+        alert("audio_title");
         myMedia = new Media(radioUrl,
             function (){ // success callback
                 alert("Media instance success.");
@@ -78,7 +79,7 @@ var app = {
                 alert("Media error");
             },
             function (status){
-                ///alert("status: "+status);
+                alert("status: "+status);
                 mediaState = status;
                 if(status == Media.MEDIA_NONE){
                     alert("MEDIA_NONE");
@@ -155,7 +156,35 @@ $(document).ready(function(){
     $('#play').click(function(){
         alert("START app.playAudio()!");
         //onclick="app.playAudio()"
-        app.playAudio();
+        //app.playAudio();
+
+
+        alert("playAudio START, mediaState:" + mediaState);
+               if(mediaState != Media.MEDIA_STARTING && mediaState != Media.MEDIA_RUNNING){
+                   myMedia.play();
+                   // Update myMedia position every second
+                   if(mediaTimer == null){
+                       mediaTimer = setInterval(function (){
+                           // get myMedia position
+                           myMedia.getCurrentPosition(
+                               // success callback
+                               function (position){
+                                   if(mediaState == 2 && position > -1){
+                                       document.getElementById('audio_position').innerHTML = position + '/' + myMedia.getDuration() + ' secs.';
+                                   }
+                               },
+                               // error callback
+                               function (e){
+                                   alert("Error getting pos=" + e);
+                                   document.getElementById('audio_position').innerHTML = "Error: " + e;
+                               }
+                           );
+                       }, 1000);
+                   }
+               } else{
+                   myMedia.pause();
+               }
+
     });
 
     $('#stop').click(function(){
