@@ -152,6 +152,18 @@ $(document).ready(function(){
     alert('ready');
     alert("START LOG");
 
+    $('#play').click(function(){
+        alert("START app.playAudio()!");
+        //onclick="app.playAudio()"
+        app.playAudio();
+    });
+
+    $('#stop').click(function(){
+           alert("START app.stopAudio()!");
+           //onclick="app.stopAudio()"
+           app.stopAudio();
+       });
+
 
     $("#btnParseXML").click(function(){
 
