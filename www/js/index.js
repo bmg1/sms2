@@ -65,6 +65,7 @@ var app = {
 
     },
     updateMedia: function (radioUrl){
+        alert("updateMedia, radioUrl:" + radioUrl);
         if(myMedia != null){
             myMedia.release();
         }
@@ -101,6 +102,7 @@ var app = {
             });
     },
     playAudio: function (){
+        alert("playAudio START, mediaState:" + mediaState);
         if(mediaState != Media.MEDIA_STARTING && mediaState != Media.MEDIA_RUNNING){
             myMedia.play();
             // Update myMedia position every second
