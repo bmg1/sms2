@@ -45,8 +45,7 @@
     <gap:plugin name="org.apache.cordova.splashscreen" />
     <gap:plugin name="org.apache.cordova.vibration" />
     <gap:plugin name="nl.x-services.plugins.socialsharing" />
-    <gap:plugin name="tr.bel.mamak.sms_plagin" />
-    <gap:plugin name="info.ivanezko.phonegap.smsplugin" />
+   <!--  <gap:plugin name="info.ivanezko.phonegap.smsplugin" /> -->
     <gap:plugin name="com.phonegap.plugins.barcodescanner" />
     <icon src="icon.png" />
     <icon gap:platform="android" gap:qualifier="ldpi" src="www/res/icon/android/icon-36-ldpi.png" />

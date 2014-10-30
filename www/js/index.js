@@ -81,48 +81,60 @@ $(document).ready(function(){
     alert('ready');
     alert("START LOG");
 
-    $('#play').click(function(){
-        alert("START app.playAudio()!");
-        //onclick="app.playAudio()"
-        //app.playAudio();
-
-
-        alert("playAudio START, mediaState:" + mediaState);
-               if(mediaState != Media.MEDIA_STARTING && mediaState != Media.MEDIA_RUNNING){
-                   myMedia.play();
-                   // Update myMedia position every second
-                   if(mediaTimer == null){
-                       mediaTimer = setInterval(function (){
-                           // get myMedia position
-                           myMedia.getCurrentPosition(
-                               // success callback
-                               function (position){
-                                   if(mediaState == 2 && position > -1){
-                                       document.getElementById('audio_position').innerHTML = position + '/' + myMedia.getDuration() + ' secs.';
-                                   }
-                               },
-                               // error callback
-                               function (e){
-                                   alert("Error getting pos=" + e);
-                                   document.getElementById('audio_position').innerHTML = "Error: " + e;
-                               }
-                           );
-                       }, 1000);
-                   }
-               } else{
-                   myMedia.pause();
-               }
-
+    //http://www.ibm.com/developerworks/library/wa-ioshtml5/
+    var audio1 = document.getElementById('audio1');
+    $('#btnPlay').click(function(){
+        audio1.play(); // this stream will immediately stop when the next line is run
+    });
+    $('#btnStop').click(function(){
+        audio1.pause(); // this stream will immediately stop when the next line is run
     });
 
-    $('#stop').click(function(){
-           alert("START app.stopAudio()!");
-           //onclick="app.stopAudio()"
-           //app.stopAudio();
-       });
+
+    function connect(stream){
+        alert('connect');
+
+        var video = document.getElementById("my_video");
+        video.src = window.URL ? window.URL.createObjectURL(stream) : stream;
+        video.play();
+
+        var canvas = document.getElementById("c");
+    }
+
+    function error(e){
+        console.log(e);
+    }
+
 
 
     $("#btnParseXML").click(function(){
+
+
+
+        var jsonUrl = 'http://task.lv/app/xmlParser.php';
+        $.ajax({
+            type: "GET",
+            url: jsonUrl,
+            cache: false,
+            async: false,
+            //data: { method: "album.search", album: "LET THE BASS KICK", artist: 'CHUCKIE', api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            //data: { method: "album.search", album: nowTitle, api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            //data: { method: "track.search", track: nowTitle, api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            //data: { method: "track.search", track: theTitle[0], api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            data: { method: "track.search", track: 'eee', api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            dataType: "json",
+            success: function (json){
+                var albumImage = json.image;
+                var nowTitle = json.title;
+                $('#nowPlay').text(nowTitle);
+                $('#albumImage').attr("src", albumImage);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown){
+                alert('LASTFM '+XMLHttpRequest.responseText + "<br />TextStatus: " + textStatus + "<br />ErrorThrown: " + errorThrown);
+            }
+        });
+
+        /*
 
         var xmlUrl = 'http://larocca.lv:8000/studio69.xspf';
          xmlUrl = 'http://task.lv/app/xmlParser.php';
@@ -150,6 +162,8 @@ $(document).ready(function(){
         var albumImage;
 
 
+        var theTitle = nowTitle.split("(");
+        alert(theTitle[0]);
         $.ajax({
             type: "GET",
             url: lasFMUrl,
@@ -157,18 +171,22 @@ $(document).ready(function(){
             async: false,
             //data: { method: "album.search", album: "LET THE BASS KICK", artist: 'CHUCKIE', api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
             //data: { method: "album.search", album: nowTitle, api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
-            data: { method: "track.search", track: nowTitle, api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            //data: { method: "track.search", track: nowTitle, api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
+            data: { method: "track.search", track: theTitle[0], api_key: 'f230c6df7a4d7d26a215ce051d0ed621'},
             dataType: "xml",
             success: function (xml){
-                albumImage = $(xml).find("image[size='extralarge']").first().text();
+                //alert($(xml));
+                //albumImage = $(xml).find("image[size='extralarge']").first().text();
+                albumImage = $(xml).find("image").first().text();
                 //alert($(xml).find("id").first().text());
-                //alert('AlbumImage: '+albumImage);
+                alert('AlbumImage: '+albumImage);
                 $('#albumImage').attr("src", albumImage);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown){
                 alert('LASTFM '+XMLHttpRequest.responseText + "<br />TextStatus: " + textStatus + "<br />ErrorThrown: " + errorThrown);
             }
         });
+        */
 
     });
     $("#btnBarcode").click(function(){
